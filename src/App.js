@@ -2,50 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-
-
-const foodILike = [
-  {
-    id:1,
-    name : "Kimchi",
-    image: "https://woochonfood.com/wp-content/uploads/2019/05/%EB%B0%B0%EC%B6%94%EA%B9%80%EC%B9%98-Napa-Cabbage-Kimchi.jpg",
-    rating : 4
-    },
-  {
-    id:2,
-    name : "Steak",
-    image : "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630,f_auto/w_80,x_15,y_15,g_south_west,l_klook_water/activities/zyulungyz94xotkznw79/.jpg",
-    rating : 4.5
+class App extends React.Component{
+  constructor(props) {
+    super(props);
+    console.log("hello ");
   }
-];
 
+  state = {
+    count: 0
+  };
+  add = () => {
+    this.setState(current => ({count: current.count + 1}));
+  };
+  minus = () => {
+    this.setState(current => ({count: current.count - 1}));
+  };
 
-function Food({name, pic, rating}) {
-
-  return (
-  <div>
-    <h2>I like {name}</h2>
-    <h4>{rating}/5.0</h4>
-    <img src={pic} alt={name} ></img>
-  </div>
-  );
-}
-
-Food.propTypes = {
-  name: PropTypes.string.isRequired,
-  pic: PropTypes.string.isRequired,
-  rating: PropTypes.number
-};
-
-
-function App() {
-  return  (
+  componentDidMount() {
+   console.log("component rendered"); 
+  }
+  componentDidUpdate() {
+    console.log("i just updated")
+  }
+  componentWillUnmount() {
+    console.log("goodbye cruel world")
+  }
+  render() {
+    console.log("i am rendering");
+    return ( 
     <div>
-     {foodILike.map(dish => (
-       <Food key={dish.id} name={dish.name} pic={dish.image} rating={dish.rating} />
-      ))}
+      <h1>The Number is : {this.state.count} </h1>
+      <button onClick={this.add}>Add</button>
+      <button onClick={this.minus}>Minus</button>
     </div>
     );
+  }
 }
 
 export default App;

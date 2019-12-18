@@ -1,5 +1,5 @@
 # Movie App 2019
-##create-react-app
+## create-react-app
 
 React JS Fundamentals Course (2019 Update!)
 
@@ -47,3 +47,9 @@ arr.map(current => { //instead of =>, can use like function(current) in old java
 ```
 - map은 위처럼 function을 취해서 그 function을 각 item에 적용한 뒤 그 연산의 결과로 array를 만들어 반환해준다.
 - 위의 예시에서 `current` 자리에 들어가는 것은 Object이다. 따라서 각 Object 내의 필드에 접근할 수 있다.
+- map에 인자로 전달할 function을 inline 혹은 arrow function으로 두지 않고도 별도로 작성하고, 이름만 써놓을 수 있다.
+- 리액트의 모든 element들은 유일해야 하고, List에 집어 넣으면 이들은 유일성을 잃는다. 따라서 List 내의 child는 unique한 key prop을 가져야 한다. (property를 부여해줘야 한다.)
+- 리액트의 모든 element는 모두 다르게 보일 필요가 있고, 다른 특성들을 부여해줬다고 해서 리액트가 그것을 알진 못한다. 때문에 key prop을 지정해줘야 한다.
+- key prop은 function component로 전달되지 않는다. 왜냐하면 사용되지 않기 때문이다. 이는 기본적으로 리액트 내부에서만 사용하기 위한 것이다.
+- 우리가 원하는 props가 우리가 갖고 있는 props인지 명확하게 체크하는 방법이 필요하다. (즉, 다시 말하면 부모 컴포넌트로부터 전달 받은 props가 예상한 props인지)
+- 이를 사용하기 위해 `npm i prop-types`를 통해 설치하면  `package.json`에 자동으로 추가되고 이를 `import PropTypes from 'prop-types'`와 같이 적용하여 사용할 수 있다.

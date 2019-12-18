@@ -1,5 +1,5 @@
 # Movie App 2019
-## create-react-app
+## using create-react-app
 
 React JS Fundamentals Course (2019 Update!)
 --> 강의 들으면서 정리한 내용
@@ -103,4 +103,4 @@ componentDidMount() {
 - 앞으로 할 일은 위처럼 componentDidMount에서 data를 fetch 하는 것이다. 이렇게 API로부터 data fetching이 완료되면, 영화를 render하고, map을 만들고, movie를 render한다.
 - 내가 미래에 쓰고자 하는 state를 선언하는 건 필수가 아니다. 따라서 존재하지 않는 state를 사용하더라도 에러는 발생하지 않는다. 미래에 있을수도 있는 것에 대한 것이기 때문에 처음부터 `state = {}`내에 선언할 필요는 없다. state를 추가하는 것은 자유이고, setState를 사용할 때, state 내에 default 값을 선언할 필요는 없다.
 
-### 3. Making the Movie App
+### 4. Making the Movie App

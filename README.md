@@ -90,3 +90,17 @@ arr.map(current => { //instead of =>, can use like function(current) in old java
 - mounting 과정에서, 컴포넌트가 mount될 때(웹사이트로 들어갈 때) `constructor()` 를 호출한다. 이후 `render()`가 호출해 나타난 뒤에 `componentDidMount()`를 통해 이 컴포넌트가 처음 render됐음을 알려준다. 
 - `getDerivedStateFromProps()` 혹은 `shouldComponentUpdate()` , `getSnapshotBeforeUpdate()` 에 대해선 이야기하지 않는다.
 - update 과정은, state가 동적으로 변경될 때, 그게 업데이트다. `setState()`를 호출하면 먼저 컴포넌트를 호출하여 `render()`를 호출하고, `componentDidUpdate()`가 실행된다.
+- 컴포넌트가 unmount될 때 (페이지를 떠날 때), `componentWillUnmount()`가 호출될 수 있지만 이는 새로고침을 통해 시뮬레이션 할 수 없었다.
+- 컴포넌트에서 state를 사용하기 위해 `this.state`를 사용해야 하는데, `const {isLoading} = this.state;`와 같은 정의를 통해 생략할 수 있다. (es6의 문법)
+- delay function을 다음과 같이 사용할 수 있다. (timeout은 javascript thing)
+```javascript
+componentDidMount() {
+    setTimeout(() =>{
+         this.setState({isLoading: false});
+    }, 6000);
+}
+```
+- 앞으로 할 일은 위처럼 componentDidMount에서 data를 fetch 하는 것이다. 이렇게 API로부터 data fetching이 완료되면, 영화를 render하고, map을 만들고, movie를 render한다.
+- 내가 미래에 쓰고자 하는 state를 선언하는 건 필수가 아니다. 따라서 존재하지 않는 state를 사용하더라도 에러는 발생하지 않는다. 미래에 있을수도 있는 것에 대한 것이기 때문에 처음부터 `state = {}`내에 선언할 필요는 없다. state를 추가하는 것은 자유이고, setState를 사용할 때, state 내에 default 값을 선언할 필요는 없다.
+
+### 3. Making the Movie App

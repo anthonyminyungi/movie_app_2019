@@ -2,8 +2,9 @@
 ## create-react-app
 
 React JS Fundamentals Course (2019 Update!)
+--> 강의 들으면서 정리한 내용
 
-.#1
+.#1 Introduce
 React의 동작 
 - React는 내가 그곳에 쓰는 모든 요소를 생성함. (자바스크립트와 함께 만들고 HTML로 밀어 넣는다.)
 - 나의 모든 리액트 application을 하나의 div 사이에 넣는다.
@@ -16,7 +17,8 @@ React의 동작
     - 소스코드는 실재하지 않고 가상으로 존재한다. 리액트가 그것을 만들어 낸다.
     - 이것이 리액트가 하는 일이고 빠른 이유이다.
 
-.#2
+.#2 JSX & Props
+Component
 - `<App />`?  --> Component.
 - 리액트는 컴포넌트와 함께 동작하며 모든 것은 컴포넌트다. 
 - Component란? HTML을 반환하는 함수이다.
@@ -27,6 +29,7 @@ React의 동작
 - 따라서 Appliction 안에서 컴포넌트를 넣어서 사용하는 것인데, 더 많은 컴포넌트를 import 할 수 있다.
 - Component는 대문자로 시작해야 한다.
 
+Props
 - JSX에서 두 번째로 이해해야 할 것은, 컴포넌트에 정보를 보낼 수 있다는 점이다.
 - 리액트는 재사용이 가능한 컴포넌트를 만들 수 있다. (계속해서 반복해서 사용할 수 있다.)
 - 컴포넌트 (호출부?) 에서 Property를 작성하면 함수 컴포넌트(선언부) 에서 사용할 수 있다. (인자로 전달 가능, console에 찍으면 Object 형태로 찍힌다.)
@@ -51,5 +54,13 @@ arr.map(current => { //instead of =>, can use like function(current) in old java
 - 리액트의 모든 element들은 유일해야 하고, List에 집어 넣으면 이들은 유일성을 잃는다. 따라서 List 내의 child는 unique한 key prop을 가져야 한다. (property를 부여해줘야 한다.)
 - 리액트의 모든 element는 모두 다르게 보일 필요가 있고, 다른 특성들을 부여해줬다고 해서 리액트가 그것을 알진 못한다. 때문에 key prop을 지정해줘야 한다.
 - key prop은 function component로 전달되지 않는다. 왜냐하면 사용되지 않기 때문이다. 이는 기본적으로 리액트 내부에서만 사용하기 위한 것이다.
+
+PropTypes
 - 우리가 원하는 props가 우리가 갖고 있는 props인지 명확하게 체크하는 방법이 필요하다. (즉, 다시 말하면 부모 컴포넌트로부터 전달 받은 props가 예상한 props인지)
 - 이를 사용하기 위해 `npm i prop-types`를 통해 설치하면  `package.json`에 자동으로 추가되고 이를 `import PropTypes from 'prop-types'`와 같이 적용하여 사용할 수 있다.
+- 해당 컴포넌트의 propTypes 필드를 통해 각 prop에서 `string`, `int`, `array`, `boolean` 와 같은 type과 `isRequired`처럼 필수적인 prop을 지정할 수 있다.
+- `isRequired` prop은 해당 type을 갖거나 `undefined`라는 의미이므로 지정하지 않아도 에러가 발생하지 않늗다. 그러나 type이 일치하지 않으면 에러가 발생한다.
+
+공식 문서의 [PropTypes 설명](https://ko.reactjs.org/docs/typechecking-with-proptypes.html) 
+
+.#3 State

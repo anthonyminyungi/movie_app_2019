@@ -104,6 +104,7 @@ componentDidMount() {
 - 내가 미래에 쓰고자 하는 state를 선언하는 건 필수가 아니다. 따라서 존재하지 않는 state를 사용하더라도 에러는 발생하지 않는다. 미래에 있을수도 있는 것에 대한 것이기 때문에 처음부터 `state = {}`내에 선언할 필요는 없다. state를 추가하는 것은 자유이고, setState를 사용할 때, state 내에 default 값을 선언할 필요는 없다.
 
 ### 4. Making the Movie App
+*Data fetching from API and Rendering*
 - 많은 사람들이 일반적으로 Javascriptd에서 data를 fetch할 때 사용하는 방법은 `fetch()`인데, 이 강좌에서는 Axios라는 더 좋은 방법을 사용할 것이다. (마치 fetch 위의 작은 layer이다.)
 - 영화 API를 가져오기 위해 YTS의 `https://yts-proxy.now.sh/list_movies.json`를 사용한다.
 - `axios.get()` 은 느릴 수 있기 때문에 javascript에게 componentDidMount 함수가 끝날 때까지 시간이 걸릴 수 있음을 알려줘야 한다. 때문에 `async` 키워드를 사용한다.
@@ -131,3 +132,18 @@ getMovies = async() => {
         ))}
     </div>
 ```
+
+*Styling*
+- create-react-app 덕분에 css 통합이 매우 쉽다.
+- javascript에서는 `style={{backgroundColor: "red"}}` 와 같이 CSS를 작성할 수 있다. 하지만 선호되는 방식은 아니다. 다른 방법은 css 파일을 만드는 것.
+- 원하는 모든 컴포넌트에 대한 css 파일을 만들 수 있고, 또한 하나의 css파일에 모든 것을 넣을 수도 있다.
+- 기존에 HTML 태그에서 사용하던 식별자인 class는 JSX에서 사용하는 `class {}` 와 동일하기 때문에 Warning을 유발한다. 따라서 class 컴포넌트 내에서 사용할 때에는 `className`을 사용해야 한다. 작성은 className으로 해도 요소 검사에서는 HTML에서의 class로 인식한다.
+- 추가적으로 HTML에서 `<label for></label>` 에서의 for는 javascript의 loop에 해당하는 것과 동일하기 때문에 `<label htmlFor></label>` 와 같이 작성해야 한다.
+- Genre를 사용하기 위해 지금까지와 마찬가지로 map을 사용하면 key prop을 제공해야 한다는 에러가 발생하는데(**map의 각 item은 key가 필요하기 때문에**), 이 경우에는 장르에 대한 id가 존재하지 않으므로 key prop을 작성할 필요가 없다. **대신 map을 사용하면 각 item들에 대한 index를 활용할 수 있는데**, 이를 key로 활용하면 된다.
+- CSS 스타일링은 이 강좌에서 자세히 다루지 않을 것이므로 TimeLapse로 보여줄 것이다.
+- String은 하나의 Array이다. 화면에 나타나는 긴 문장을 같은 길이로 제한하고 싶다면 문장 요소에 javascript 문법인 slice를 이용하면 된다. 이렇게 `summary.slice(0, 180)`
+
+### 5. Conclusions
+- `npm i gh-pages`를 통해서 github page 도메인으로 나타나게 해주는 툴이다. 내 github 안에서 HTML,CSS,Javascript 정적 웹사이트를 무료로 제공해준다.
+- gh-pages를 사용하기 위해 `package.json`에 `"homepage" : "https://{github username}.github.io/{the name of project in github}"`와 같이 입력해주는 과정이 필요하다.(영문 소문자)
+- `npm run build`를 통해 build 폴더를 생성하고 `package.json`의 scripts 섹션에 `deploy` 필드를 추가해준다. `"deploy" : "gh-pages -d build"`, 그리고 deploy를 호출하기 전에 새로운 build 폴더를 생성하도록 `"predeploy" : "npm run build"`를 추가해준다.

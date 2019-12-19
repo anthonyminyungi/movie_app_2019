@@ -146,4 +146,34 @@ getMovies = async() => {
 ### 5. Conclusions
 - `npm i gh-pages`를 통해서 github page 도메인으로 나타나게 해주는 툴이다. 내 github 안에서 HTML,CSS,Javascript 정적 웹사이트를 무료로 제공해준다.
 - gh-pages를 사용하기 위해 `package.json`에 `"homepage" : "https://{github username}.github.io/{the name of project in github}"`와 같이 입력해주는 과정이 필요하다.(영문 소문자)
-- `npm run build`를 통해 build 폴더를 생성하고 `package.json`의 scripts 섹션에 `deploy` 필드를 추가해준다. `"deploy" : "gh-pages -d build"`, 그리고 deploy를 호출하기 전에 새로운 build 폴더를 생성하도록 `"predeploy" : "npm run build"`를 추가해준다.
+- `npm run build`를 통해 build 폴더를 생성하고 `package.json`의 scripts 섹션에 `deploy` 명령어를 추가해준다. `"deploy" : "gh-pages -d build"`, 그리고 deploy를 호출하기 전에 새로운 build 폴더를 생성하도록 `"predeploy" : "npm run build"`명령어 또한 추가해준다.
+
+이 과정까지 마치고 생성된 나의 [Movie App](https://anthonyminyungi.github.io/movie_app_2019/)
+
+- 사실 나는 더이상 state를 갖기 위해서 class component를 사용해야 할 필요가 없다. 강의에서 언급하지 않은 이유는 이것이 리액트의 새로운 부분이고 이해하는 데 많은 시간이 걸릴 것이기 때문이다.
+- 이는 react hook이라는 것 때문이다. 다른 방식이긴 하지만 class 컴포넌트의 대체물이라는 것(class 컴포넌트가 구식이라는) 말은 아니다.
+
+### 6. Bonus. Routing
+*Router*
+- 리액트에서 navigation을 사용하기 위해 react-router-dom 이라는 것을 사용할 수 있다. `npm install react-router-dom`
+- 디렉토리 생성 및 두 화면으로 나누기 위한 Home, About file 생성
+- router는 기본적으로 url을 통해 현재 페이지와 이동하려는 페이지의 길잡이 역할을 하는 간단한 리액트 컴포넌트이다. 
+- react-router-dom 에서 Route 컴포넌트는 두가지 중요한 prop이 있는데, 하나는 URL에 해당하는**path**이고, 그 경로로 이동해서 화면에 보여줄 **component**이다.
+- 리액트는 작성된 Router에 있는 모든 경로들을 비교하여 매치되는 것을 찾고 그것을 화면에 보여준다. 때문에 `/home`경로에 작성된 내용과 `/home/introduction`에 작성된 내용이 `/home/introduction`에서 두 경로가 매치되어 동시에 render되어 보여지는 것이다.
+- 이를 해결하기 위해 **`exact={true}`** 와 같은 방식으로 prop을 작성하여 해당 URL과 정확하게 일치하는 경로에서만 해당 컴포넌트를 보여줄 수 있도록 할 수 있다. 
+
+*Navigation*
+- HTML은 `a href`를 통헤 페이지를 이동할 때마다 화면을 새로고침한다.
+- 따라서 `a href`가 아닌 `Link to`를 사용한다.
+- `Link`는 반드시 Router 컴포넌트 안에 존재해야 한다.
+- 모든 태그를 라우터 내에 작성할 필요는 없지만 (다른 페이지에서도 공통으로 보여지길 원하는 것은 Router 바깥에 쓸 수도 있음. ex. footer)
+- HashRouter는 `/#/`와 같은 경로를 가지지만 BrowserRouter에는 존재하지 않는다. 선택적으로 사용할 수 있다. (깃헙 페이지에서 정확하게 세팅하는게 귀찮기 때문에 HashRouter 사용)
+- Router 내의 모든 Route는 리액트에 의해 자동으로 어떤 prop들이 들어간다. 이 prop들은 활용할 수 있다.
+- [react-router 문서](https://reacttraining.com/react-router/web/api/Link/to-object)에 의하면 `Link` 컴포넌트를 사용할 때, `to` prop은 String이 아닌 Object로 대체할 수 있다. 이를 활용하여 다양한 것들을 구체화 할 수 있다.
+- `Link to`에서 작성한 Object는 해당 경로로 이동할 때, props로 전달될 수 있으며 이를 활용할 수 있다. 이는 자동으로 전달되는 prop중 `location`의 하위에서 확인할 수 있다.
+- 그러나 클릭을 통한 화면 전환을 통하지 않으면 prop이 제대로 전달되지 않을 수 있다.
+- 전달하려는 props가 `undefined`일 경우 home으로 redirect 할 수도 있다.
+- 이러한 movie-detail 페이지에 접근하는 유일한 방법은 메인 페이지의 요소를 클릭해서만 가능하도록 하고 임의로 url을 통해 접근하려고 할 때, 메인 페이지로 강제로 redirect해버리는 것이다.
+- (복습)생명주기에 따르면 `render()`가 호출된 뒤에 `componentDidMount()`가 호출되는 것에 주의해야 한다. 
+- 현재는 Home에서 About에 갔다가 다시 Home을 누르면 로딩을 다시 하는데, 이는 현재 Home.js에 state가 보존되어 있기 때문이다. 따라서 다른 패이지로 이동하여 Home이 사라졌다가 다시 돌아올 때마다 state는 비어있기 때문에 datad를 다시 Load해야 한다.
+- 이렇게 하는 대신에 [redux](https://redux.js.org/) 라는 것을 활용할 수 있다. `redux`는 이 state를 화면으로부터 떨어뜨려 놓을 수 있다. 이 말은 기본적으로 현재 우리가 보고 있는 화면의 state와 data를 다른 어떠한 곳에 저장시켜 두었다가 사용하므로 다른 페이지에 갔다가 돌아와도 state가 비어있지 않게 된다. 따라서 loading은 한 번만 일어나게 된다. 

@@ -104,3 +104,30 @@ componentDidMount() {
 - 내가 미래에 쓰고자 하는 state를 선언하는 건 필수가 아니다. 따라서 존재하지 않는 state를 사용하더라도 에러는 발생하지 않는다. 미래에 있을수도 있는 것에 대한 것이기 때문에 처음부터 `state = {}`내에 선언할 필요는 없다. state를 추가하는 것은 자유이고, setState를 사용할 때, state 내에 default 값을 선언할 필요는 없다.
 
 ### 4. Making the Movie App
+- 많은 사람들이 일반적으로 Javascriptd에서 data를 fetch할 때 사용하는 방법은 `fetch()`인데, 이 강좌에서는 Axios라는 더 좋은 방법을 사용할 것이다. (마치 fetch 위의 작은 layer이다.)
+- 영화 API를 가져오기 위해 YTS의 `https://yts-proxy.now.sh/list_movies.json`를 사용한다.
+- `axios.get()` 은 느릴 수 있기 때문에 javascript에게 componentDidMount 함수가 끝날 때까지 시간이 걸릴 수 있음을 알려줘야 한다. 때문에 `async` 키워드를 사용한다.
+- getMovie 라는 새로운 함수를 만들어 componentDidMount 함수에서 호출하도록 하고, 아래와 같이 작성하여 호출하는 함수가 비동기이며, axios를 기다려야 함을 얘기해 준다는 것이다. async를 사용하지 않으면 await 키워드를 사용할 수 없다.
+```javascript
+getMovies = async() => {
+    const movies = await axios.get("https://yts-proxy.now.sh/list_movies.json");
+}
+```
+- 위의 axios.get을 통해 가져온 data의 movie에 접근하려면 `movies.data.data.movies` 와 같이 매번 작성해야 하는데, es6의 문법에 따라 movies 내부에만 접근하려 한다면 위의 const movies를 이렇게 바꿀 수 있다. `const {data : {data : {movies}}}`
+- state 내에 존재한 `movies = []`을 위해 `setState({movies : movies})`와 같이 작성해야 할 것 같지만 javascript는 똑똑하기 때문에 `setState({movies})`처럼만 작성해줘도 된다.
+- 실제로 Movie를 render하기 위한 js파일을 별도로 만들건데, 여기서는 state가 필요하지 않으므로 class component가 아닌 function component를 사용한다.
+- render function에서 isLoading이 완료되면 "We are Ready" 대신에 새로 작성한 Movie 컴포넌트를 import하여 map 함수를 수행한다.
+```javascript
+    <div>
+      {isLoading ? "Loading..." : movies.map(movie => (
+          <Movie 
+            key={movie.id}
+            id={movie.id} 
+            year={movie.year} 
+            title={movie.title} 
+            summary={movie.summary} 
+            poster={movie.medium_cover_image}
+          />
+        ))}
+    </div>
+```
